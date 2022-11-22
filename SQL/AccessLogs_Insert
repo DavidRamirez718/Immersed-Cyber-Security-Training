@@ -1,0 +1,105 @@
+USE [Immersed]
+GO
+/****** Object:  StoredProcedure [dbo].[AccessLogs_Insert]    Script Date: 11/22/2022 1:28:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ --=============================================
+ --Author: <Ramirez, David>
+ --Create date: <2022-10-20>
+ --Description: <Insert for AccessLogs>
+ --Code Reviewer: Christopher Mercado
+ 
+
+ --MODIFIED BY: author
+ --MODIFIED DATE:12/1/2020
+ --Code Reviewer: 
+ --Note: 
+ --=============================================
+ALTER proc [dbo].[AccessLogs_Insert]
+			@EntityTypeId int
+           ,@EntityId int
+           ,@AccessTypeId int 
+           ,@AccessStatusId int
+           ,@IPAddressPort nvarchar(100)
+           ,@EndpointName nvarchar(256)         
+           ,@PayloadName nvarchar(100)
+           ,@Route nvarchar(100)
+		   ,@Id int OUTPUT
+
+
+as
+
+
+
+
+/*
+
+DECLARE @Id int = 0;
+
+DECLARE     @EntityTypeId int = 3
+           ,@EntityId int = 1
+           ,@AccessTypeId int = 3
+           ,@AccessStatusId int = 2
+           ,@IPAddressPort nvarchar(100) = '195.168.0.1:80'
+           ,@EndpointName nvarchar(256) = 'POST'
+           ,@PayloadName nvarchar(100) = 'Access'
+           ,@Route nvarchar(100) = 'Route'
+		   
+
+Execute dbo.AccessLogs_Insert
+			@EntityTypeId
+           ,@EntityId
+           ,@AccessTypeId
+           ,@AccessStatusId
+           ,@IPAddressPort 
+           ,@EndpointName 
+           ,@PayloadName 
+           ,@Route 
+		   ,@Id OUTPUT
+
+Select @Id 
+
+Select *
+From dbo.AccessLogs
+
+
+
+Delete from dbo.AccessLogs
+Where Id = 22
+
+
+*/
+
+
+BEGIN
+
+/*  For DateCreated and DateModified  */
+DECLARE @DateCreated datetime = GETUTCDATE()
+
+
+INSERT INTO dbo.AccessLogs
+           ([EntityTypeId]
+           ,[EntityId]
+           ,[AccessTypeId]
+           ,[AccessStatusId]
+           ,[IPAddressPort]
+           ,[EndpointName]
+           ,[DateCreated]
+           ,[PayloadName]
+           ,[Route])
+VALUES
+			(@EntityTypeId
+           ,@EntityId
+           ,@AccessTypeId
+           ,@AccessStatusId
+           ,@IPAddressPort 
+           ,@EndpointName 
+           ,@DateCreated 
+           ,@PayloadName 
+           ,@Route)
+
+SET @Id = SCOPE_IDENTITY()
+
+END
